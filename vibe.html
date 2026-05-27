@@ -53,6 +53,18 @@
             return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0';
         }
         
+        // 静态案例数据
+        const staticCases = [
+            {
+                id: 'case-1',
+                title: '咖啡塔罗H5应用',
+                excerpt: '咖啡塔罗H5小应用，使用阿里秒悟Vibe Coding制作，通过抽取塔罗牌查看今日运势和推荐咖啡品类，喝什么不再纠结~Just for fun😄！',
+                coverImage: 'cases/case1-cover.JPG',
+                detailUrl: 'vibe-case-1.html',
+                createdAt: '2026-05-27'
+            }
+        ];
+        
         // 页面加载时检查环境并显示/隐藏创建按钮
         document.addEventListener('DOMContentLoaded', function() {
             const createButtonContainer = document.getElementById('createButtonContainer');
@@ -67,11 +79,13 @@
         
         // 加载案例列表
         function loadCases() {
-            const cases = JSON.parse(localStorage.getItem('vibeCases') || '[]');
+            const dynamicCases = JSON.parse(localStorage.getItem('vibeCases') || '[]');
             const container = document.getElementById('casesContainer');
             const isLocal = isLocalEnvironment();
             
-            if (cases.length === 0) {
+            const allCases = [...staticCases, ...dynamicCases];
+            
+            if (allCases.length === 0) {
                 container.innerHTML = `
                     <div style="text-align: center; padding: 64px 0; background: var(--surface); border-radius: 16px; border: 1px dashed var(--border);">
                         <svg viewBox="0 0 24 24" style="width: 64px; height: 64px; fill: var(--text-3); margin: 0 auto 16px;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -83,16 +97,12 @@
             }
             
             // 渲染案例卡片列表
-            const casesHtml = cases.map((item, index) => {
-                // 使用简介字段，如果没有则从内容中提取
-                let excerpt = item.excerpt || '';
-                if (!excerpt) {
-                    const contentText = item.content.replace(/<[^>]*>/g, '');
-                    excerpt = contentText.length > 200 ? contentText.substring(0, 200) + '...' : contentText;
-                }
+            const casesHtml = allCases.map((item, index) => {
+                // 判断是否是静态案例
+                const isStatic = staticCases.some(c => c.id === item.id);
                 
-                // 操作按钮（仅本地环境显示）
-                const actionButtons = isLocal ? `
+                // 操作按钮（仅本地环境显示，且仅动态案例可编辑删除）
+                const actionButtons = isLocal && !isStatic ? `
                     <div style="
                         position: absolute;
                         right: 20px;
@@ -149,7 +159,7 @@
                         position: relative;
                         cursor: pointer;
                         min-height: 220px;
-                    " onclick="openCaseDetail('${item.id}')">
+                    " onclick="openCaseDetail('${item.id}', ${isStatic})">
                         <!-- 标题区域 - 全宽在顶部 -->
                         <div style="margin-bottom: 16px;">
                             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
@@ -178,7 +188,7 @@
                             
                             <!-- 内容摘要 -->
                             <div style="flex: 1; min-width: 0;">
-                                <p style="color: var(--text-2); font-size: 0.95rem; line-height: 1.7; margin: 0;">${excerpt}</p>
+                                <p style="color: var(--text-2); font-size: 0.95rem; line-height: 1.7; margin: 0;">${item.excerpt || '暂无简介'}</p>
                             </div>
                         </div>
                         
@@ -191,9 +201,16 @@
         }
         
         // 打开案例详情
-        function openCaseDetail(caseId) {
-            sessionStorage.setItem('selectedCaseId', caseId);
-            window.location.href = 'vibe-detail.html';
+        function openCaseDetail(caseId, isStatic) {
+            if (isStatic) {
+                const staticCase = staticCases.find(c => c.id === caseId);
+                if (staticCase && staticCase.detailUrl) {
+                    window.location.href = staticCase.detailUrl;
+                }
+            } else {
+                sessionStorage.setItem('selectedCaseId', caseId);
+                window.location.href = 'vibe-detail.html';
+            }
         }
         
         // 编辑案例

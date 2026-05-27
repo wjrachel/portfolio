@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>咖啡塔罗H5应用 | AI产品应用实践</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        
+        .detail-header {
+            margin-bottom: 32px;
+        }
+        
+        .detail-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .detail-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-3);
+            font-size: 0.9rem;
+        }
+        
+        .detail-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+        
+        .detail-content h1,
+        .detail-content h2,
+        .detail-content h3 {
+            font-family: var(--font-display);
+            margin: 24px 0 12px;
+            color: var(--text);
+        }
+        
+        .detail-content h1 { font-size: 1.8rem; }
+        .detail-content h2 { font-size: 1.5rem; }
+        .detail-content h3 { font-size: 1.3rem; }
+        
+        .detail-content p {
+            margin: 12px 0;
+        }
+        
+        .detail-content ul,
+        .detail-content ol {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+        
+        .detail-content li {
+            margin: 6px 0;
+        }
+        
+        .detail-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            margin: 16px 0;
+            color: var(--text-2);
+            font-style: italic;
+        }
+        
+        .detail-content pre {
+            background: var(--surface);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid var(--border);
+        }
+        
+        .detail-content code {
+            background: var(--accent-soft);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .detail-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
+        }
+        
+        .detail-content img.loading {
+            background: var(--border);
+            min-height: 200px;
+        }
+        
+        .detail-content img.failed {
+            display: none;
+        }
+        
+        .image-fallback {
+            background: var(--accent-soft);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        
+        .image-fallback svg {
+            width: 48px;
+            height: 48px;
+            fill: var(--text-3);
+            margin-bottom: 12px;
+        }
+        
+        .image-fallback p {
+            color: var(--text-3);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .detail-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .detail-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+        
+        .back-btn:hover {
+            color: var(--accent);
+        }
+        
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <a href="vibe.html" class="back-btn">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            返回案例列表
+        </a>
+        
+        <article>
+            <header class="detail-header">
+                <h1 class="detail-title">咖啡塔罗H5应用</h1>
+                <div class="detail-meta">
+                    <span>发布于 2026-05-27</span>
+                </div>
+            </header>
+            <div class="detail-content">
+                <p>这是开始尝试Vibe Coding后的第一个小作品，当时阿里正好推出了Vibe Coding新产品-秒悟（<a href="https://meoo.com" target="_blank">https://meoo.com</a>），就用它做了一个H5小应用，为自己解决下每天喝什么咖啡的选择困难问题，just for fun😄。小应用的逻辑非常简单，这里主要记录下使用秒悟的一些好的体验和遇到的问题：</p>
+
+                <h2>好的体验</h2>
+
+                <p><strong>1、UI比较精美</strong>：无论是产品本身的UI还是生成的应用UI，都是比较精美的，再加上官方提供的高级UI/UX Skill，使得生成的产品很美观（就是调用一次消耗的积分有点多）。最新的更新，在主对话框下方也提供了风格模版，可以直接引用到对话中作为prompt，帮助用户更准确地描述应用设计风格，可以减少后期的反复修改和调试。</p>
+
+                <p><img src="cases/case1-img1.png" alt="秒悟界面"></p>
+
+                <p><strong>2、蜂群Swarms模式效率很高</strong>：蜂群多Agent并行干活的模式，是秒悟主打的特色功能，体验版套餐仅开放有限次数体验，是付费的核心功能点之一。体验过一次，干活效率确实很高，不过很多Agent产品也提供了类似功能，能不能持续作为亮点能力有待考察。</p>
+
+                <p><img src="cases/case1-img2.png" alt="蜂群模式"></p>
+
+                <p><strong>3、应用一键发布无需繁杂部署：</strong>对于不会写代码、搞部署的小白用户来说，这一点真是非常方便了，做好的应用可以一键发布上线，生成访问链接，直接能分享给其他人使用，便于传播。</p>
+
+                <p><img src="cases/case1-img3.png" alt="一键发布"></p>
+
+                <p><strong>4、提示词润色功能比较好用：</strong>在调试应用的过程中，提示词描述的是否精准会直接影响生成效果，有时候作为普通用户一个是很难准确地描述自己的想法，另一个是会懒得打很多字把需求描述得非常到位，这时候使用提示词润色功能，可以优化和完善我们的修改意见，让大模型能够更加准确地get我们的想法，减少调试的次数。</p>
+
+                <p><strong>5、其他特性优势</strong>：支持协作编辑、背靠阿里云具备完整的一套云服务后端能力等，这些特性也是宣传特色，只不过没有具体场景暂未体验到。</p>
+
+                <p><img src="cases/case1-img4.png" alt="云服务"></p>
+
+                <h2>遇到的问题</h2>
+
+                <ol>
+                    <li>会偶发不稳定、调试崩溃等问题，新产品可能再所难免。</li>
+                    <li>会偶发说了修改实际没修改成功的问题，这一点在使用其他类似产品时也会有。</li>
+                    <li>图片生成能力不是很强，当时生成的咖啡品类图片和塔罗牌牌面图案一直不能符合预期，可能是当时使用的大模型问题？后续我是通过其他Agent帮助生成了这两部分图片，通过上传图片的方式，让秒悟更新到代码中的。</li>
+                    <li>免费额度不多&积分消耗快，不过最近我看每日登录赠送的积分有效期从1天更新为7天了，还是不错的。</li>
+                    <li>社区生态还是比较基础的，这块从用户调研的问题来看，后续是会做改版的。</li>
+                </ol>
+
+                <p>总的来说，我觉得这款产品更适合<strong>无太多代码基础的普通用户</strong>或者<strong>小微企业用户</strong>，期望<strong>快速实现想法创意</strong>，构建<strong>代码复杂度不高的、轻量化的Web/H5应用</strong>，以完成业务需求的相关场景~如果代码复杂度非常高，还是适合使用Coding能力更强的智能体产品（比如Claude Code、国内的Trae、Qoder等）。</p>
+
+                <p>最后，咖啡塔罗H5小应用可以戳👉🏻链接体验：<a href="https://c81re8enbbl0.meoo.fun" target="_blank">https://c81re8enbbl0.meoo.fun</a></p>
+
+                <p>（其实当时我还想如果能够拉到真实的咖啡店菜单，是不是还能帮我直接一键下单叫个外卖什么的~~^.^</p>
+
+                <p><img src="cases/case1-img5.png" alt="咖啡塔罗应用"></p>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <p>© 2025 王瑾 · 知行工坊 · AI产品应用实践</p>
+    </footer>
+
+    <script src="scripts/theme.js"></script>
+    <script>
+        // 图片加载失败处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.detail-content img');
+            
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    // 创建fallback元素
+                    const fallback = document.createElement('div');
+                    fallback.className = 'image-fallback';
+                    fallback.innerHTML = `
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <p>图片加载失败</p>
+                    `;
+                    
+                    // 替换图片元素
+                    img.parentNode.replaceChild(fallback, img);
+                });
+                
+                // 添加加载中样式
+                img.classList.add('loading');
+                
+                img.addEventListener('load', function() {
+                    img.classList.remove('loading');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
