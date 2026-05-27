@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王瑾 - 产品经理</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* ══════════════════════════════════════
+           HERO — full-bleed, poster-like
+           ══════════════════════════════════════ */
+        .hero {
+            min-height: 100svh; display: flex; align-items: center;
+            position: relative; overflow: hidden;
+            padding: 100px clamp(24px, 5vw, 64px) 60px;
+        }
+        .hero::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            opacity: .35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+        }
+        .hero-inner {
+            display: grid; grid-template-columns: 260px 1fr;
+            gap: clamp(40px, 6vw, 80px); align-items: center;
+            max-width: 1080px; margin: 0 auto; width: 100%;
+            position: relative; z-index: 1;
+        }
+        .avatar-wrap { position: relative; }
+        .avatar-wrap img {
+            width: 100%; aspect-ratio: 1; object-fit: cover;
+            border-radius: var(--radius);
+            box-shadow: 0 24px 64px rgba(0,0,0,.10), 0 0 0 1px var(--border);
+            transition: transform .5s cubic-bezier(.22,1,.36,1);
+        }
+        .avatar-wrap:hover img { transform: scale(1.03) translateY(-4px); }
+        .avatar-wrap::before {
+            content: ''; position: absolute;
+            top: -12px; left: -12px; width: 60px; height: 60px;
+            border-top: 2px solid var(--accent); border-left: 2px solid var(--accent);
+            border-radius: 4px 0 0 0; opacity: .6;
+            transition: opacity .3s;
+        }
+        .avatar-wrap:hover::before { opacity: 1; }
+        .hero-label {
+            font-size: .82rem; font-weight: 500; color: var(--accent);
+            letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px;
+        }
+        .hero-name {
+            font-family: var(--font-display); font-size: clamp(3rem, 6vw, 4.8rem);
+            line-height: 1.05; letter-spacing: -.03em; margin-bottom: 16px;
+            color: var(--text);
+        }
+        .hero-role {
+            font-size: 1.2rem; color: var(--text-2); font-weight: 400;
+            margin-bottom: 20px;
+        }
+        .hero-bio {
+            font-size: .98rem; color: var(--text-2); line-height: 1.85;
+            max-width: 520px;
+        }
+        .hero-stats {
+            display: flex; gap: 36px; margin-top: 32px;
+            padding-top: 28px; border-top: 1px solid var(--border);
+        }
+        .stat-val {
+            font-family: var(--font-display); font-size: 1.8rem;
+            color: var(--text); line-height: 1;
+        }
+        .stat-lbl {
+            font-size: .78rem; color: var(--text-3); margin-top: 4px;
+            font-weight: 500; letter-spacing: .02em;
+        }
+
+        /* ══════════════════════════════════════
+           EXPERIENCE — clean timeline
+           ══════════════════════════════════════ */
+        .timeline { position: relative; padding-left: 32px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+            width: 1.5px; background: var(--border);
+        }
+        .tl-item { position: relative; padding-bottom: 48px; }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-dot {
+            position: absolute; left: -38px; top: 6px;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: var(--bg); border: 2.5px solid var(--accent);
+            transition: background .3s, transform .3s;
+        }
+        .tl-item:hover .tl-dot { background: var(--accent); transform: scale(1.3); }
+        .tl-date {
+            font-size: .82rem; color: var(--text-3); font-weight: 500;
+            margin-bottom: 6px; letter-spacing: .02em;
+        }
+        .tl-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+        .tl-logo {
+            width: 48px; height: 48px; border-radius: 10px;
+            display: grid; place-items: center;
+            font-family: var(--font-body); font-size: .72rem; font-weight: 700;
+            color: #fff; flex-shrink: 0; letter-spacing: -.02em;
+            line-height: 1.1; text-align: center;
+        }
+        .tl-logo.zhijiang { background: transparent; padding: 3px; }
+        .tl-logo.zhijiang img { width: 100%; height: 100%; object-fit: contain; }
+        .tl-logo.alibaba { background: transparent; }
+        .tl-logo.alibaba svg, .tl-logo.didi svg { width: 100%; height: 100%; transform: translateY(3px); }
+        .tl-info { flex: 1; }
+        .tl-company {
+            font-family: var(--font-display); font-size: 1.35rem;
+            color: var(--text); margin-bottom: 2px;
+        }
+        .tl-role { font-size: .92rem; color: var(--text-2); font-weight: 500; }
+        .tl-list { list-style: none; }
+        .tl-list li {
+            position: relative; padding: 9px 0 9px 18px;
+            font-size: .92rem; color: var(--text-2); line-height: 1.7;
+            border-bottom: 1px solid var(--border);
+        }
+        .tl-list li:last-child { border-bottom: none; }
+        .tl-list li::before {
+            content: ''; position: absolute; left: 0; top: 18px;
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent-mid);
+        }
+
+        /* ══════════════════════════════════════
+           SKILLS — open tag cloud
+           ══════════════════════════════════════ */
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 48px;
+        }
+        .sk-group {}
+        .sk-group-title {
+            font-family: var(--font-display); font-size: 1.1rem;
+            color: var(--text); margin-bottom: 16px;
+            padding-bottom: 10px; border-bottom: 1px solid var(--border);
+        }
+        .sk-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sk-tag {
+            padding: 6px 14px; border-radius: 8px;
+            font-size: .85rem; font-weight: 500;
+            transition: transform .25s, box-shadow .25s;
+            cursor: default;
+        }
+        .sk-tag:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+        .sk-tag.expert { background: var(--accent); color: #fff; }
+        .sk-tag.advanced { background: var(--accent-soft); color: var(--text); }
+        .sk-tag.intermediate { background: transparent; color: var(--text-2); border: 1px solid var(--border); }
+
+        /* ══════════════════════════════════════
+           EDUCATION — minimal list
+           ══════════════════════════════════════ */
+        .edu-list { display: flex; flex-direction: column; gap: 0; }
+        .edu-item {
+            display: grid; grid-template-columns: 180px 1fr;
+            gap: 24px; padding: 28px 0;
+            border-bottom: 1px solid var(--border);
+            transition: background .3s;
+        }
+        .edu-item:first-child { border-top: 1px solid var(--border); }
+        .edu-item:last-child { border-bottom: none; }
+        .edu-item:hover { background: var(--accent-soft); margin: 0 -16px; padding-left: 16px; padding-right: 16px; border-radius: var(--radius); }
+        .edu-period { font-size: .85rem; color: var(--text-3); font-weight: 500; padding-top: 3px; }
+        .edu-school {
+            font-family: var(--font-display); font-size: 1.2rem;
+            color: var(--text); margin-bottom: 4px;
+        }
+        .edu-meta { font-size: .9rem; color: var(--text-2); margin-bottom: 4px; }
+        .edu-note { font-size: .82rem; color: var(--text-3); line-height: 1.6; margin-top: 6px; }
+
+        /* ══════════════════════════════════════
+           知行工坊 — card layout
+           ══════════════════════════════════════ */
+        .zhixing-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+        }
+        .zhixing-card {
+            background: var(--surface); border-radius: 16px;
+            padding: 28px; border: 1px solid var(--border);
+            transition: all .3s ease;
+            position: relative; overflow: hidden;
+        }
+        .zhixing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px var(--shadow);
+            border-color: var(--accent);
+        }
+        .zhixing-accent {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 4px;
+            border-radius: 16px 16px 0 0;
+        }
+        .zhixing-card:nth-child(1) .zhixing-accent { background: var(--accent); }
+        .zhixing-card:nth-child(2) .zhixing-accent { background: var(--accent-mid); }
+        .zhixing-card:nth-child(1) { background: linear-gradient(165deg, var(--accent-soft) 0%, var(--surface) 40%); }
+        .zhixing-card:nth-child(2) { background: linear-gradient(165deg, rgba(196,149,106,.06) 0%, var(--surface) 40%); }
+        .zhixing-num {
+            font-family: var(--font-display); font-size: 2.2rem;
+            color: var(--accent); line-height: 1; margin-bottom: 16px;
+            opacity: .5; transition: opacity .3s;
+        }
+        .zhixing-card:hover .zhixing-num { opacity: 1; }
+        .zhixing-title {
+            font-family: var(--font-display); font-size: 1.15rem;
+            color: var(--text); margin-bottom: 8px;
+        }
+        .zhixing-desc {
+            font-size: .88rem; color: var(--text-2); line-height: 1.7;
+        }
+
+        /* ══════════════════════════════════════
+           CONTACT — simple, one CTA
+           ══════════════════════════════════════ */
+        .section-contact { padding-top: 140px; }
+        .contact-block {
+            text-align: center; padding: 80px 0;
+        }
+        .contact-heading {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            margin-bottom: 12px;
+        }
+        .contact-sub { font-size: 1rem; color: var(--text-2); margin-bottom: 36px; }
+        .contact-link {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 32px; border-radius: 50px;
+            background: var(--accent); color: #fff;
+            text-decoration: none; font-weight: 500; font-size: 1rem;
+            transition: transform .3s, box-shadow .3s;
+            box-shadow: 0 4px 20px rgba(196,149,106,.25);
+        }
+        .contact-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(196,149,106,.35);
+        }
+        .contact-link svg { width: 18px; height: 18px; fill: #fff; }
+
+        /* ══════════════════════════════════════
+           Responsive
+           ══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .hero-inner { grid-template-columns: 180px 1fr; gap: 28px; }
+            .hero-stats { gap: 24px; flex-wrap: wrap; }
+            .skills-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+            .edu-item { grid-template-columns: 1fr; gap: 6px; }
+        }
+        @media (max-width: 520px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .avatar-wrap { max-width: 180px; margin: 0 auto; }
+            .hero-bio { max-width: 100%; }
+            .hero-stats { justify-content: center; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <section class="hero" id="about">
+        <div class="hero-inner">
+            <div class="avatar-wrap reveal">
+                <img src="assets/avatar.png" alt="王瑾">
+            </div>
+            <div class="hero-text">
+                <p class="hero-label reveal reveal-d1">产品经理 · 产品运营</p>
+                <h1 class="hero-name reveal reveal-d2">王瑾</h1>
+                <p class="hero-bio reveal reveal-d3">
+                    9年IT及互联网从业经验，3年AI产品经理 + 5年用户产品运营。在O2O出行、电商、AI云原生、大模型等多领域具备复合实战经验，拥有国家发明专利授权（第一作者）。
+                </p>
+                <div class="hero-stats reveal reveal-d4">
+                    <div>
+                        <span class="stat-val">9+</span>
+                        <p class="stat-lbl">年从业经验</p>
+                    </div>
+                    <div>
+                        <span class="stat-val">3+</span>
+                        <p class="stat-lbl">年AI产品</p>
+                    </div>
+                    <div>
+                        <span class="stat-val">60万+</span>
+                        <p class="stat-lbl">成果转化</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section" id="experience">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label reveal">Career</p>
+                <h2 class="section-heading reveal reveal-d1">工作经历</h2>
+                <p class="section-desc reveal reveal-d2">从互联网大厂到前沿AI实验室，持续探索产品创新与价值创造。</p>
+            </div>
+            <div class="timeline">
+                <div class="tl-item reveal">
+                    <div class="tl-dot"></div>
+                    <p class="tl-date">2022.5 — 至今</p>
+                    <div class="tl-header">
+                        <span class="tl-logo zhijiang"><img src="assets/zhijiang-logo.png" alt="之江实验室"></span>
+                        <div class="tl-info">
+                            <h3 class="tl-company">之江实验室</h3>
+                            <p class="tl-role">产品经理</p>
+                        </div>
+                    </div>
+                    <ul class="tl-list">
+                        <li>智能计算开发平台 — 构建面向AI大模型训练与推理的一站式平台，涵盖开发环境、模型训练、部署评测、AI资产统一管理等核心模块</li>
+                        <li>天枢AI开源平台 — 主导与知名厂商定制化改造项目，实现约60万元成果转化收入</li>
+                        <li>AI+低代码系统 — 支持自然语言生成前端页面，获国家发明专利授权（第一作者，ZL202311604254.X）</li>
+                        <li>科研项目经理 — 多项省部级科研项目申请书撰写及全流程管理</li>
+                    </ul>
+                </div>
+                <div class="tl-item reveal reveal-d1">
+                    <div class="tl-dot"></div>
+                    <p class="tl-date">2020.10 — 2022.5</p>
+                    <div class="tl-header">
+                        <span class="tl-logo alibaba"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M810.666667 960H213.333333c-81.066667 0-149.333333-68.266667-149.333333-149.333333V213.333333c0-81.066667 68.266667-149.333333 149.333333-149.333333h597.333334c81.066667 0 149.333333 68.266667 149.333333 149.333333v597.333334c0 81.066667-68.266667 149.333333-149.333333 149.333333z" fill="#FF7200"/><path d="M874.666667 576c-85.333333 46.933333-170.666667 89.6-264.533334 110.933333-21.333333 4.266667-42.666667 4.266667-64 0s-29.866667-21.333333-21.333333-38.4c8.533333-17.066667 17.066667-38.4 29.866667-51.2 25.6-34.133333 55.466667-64 81.066666-93.866666 17.066667-21.333333 29.866667-42.666667 42.666667-64 8.533333-17.066667 4.266667-34.133333-12.8-42.666667-25.6-12.8-55.466667-21.333333-85.333333-34.133333-4.266667 0-8.533333 4.266667-12.8 4.266666l21.333333 21.333334c-85.333333 12.8-166.4 34.133333-243.2 64v4.266666c12.8 17.066667 4.266667 29.866667-8.533333 42.666667-8.533333 4.266667-12.8 8.533333-17.066667 17.066667 51.2 17.066667 98.133333 8.533333 140.8-21.333334-4.266667-4.266667-4.266667-8.533333-8.533333-12.8 17.066667 4.266667 25.6 12.8 29.866666 25.6 0 4.266667 0 8.533333-4.266666 8.533334l-8.533334-8.533334s0-4.266667-4.266666-8.533333c-51.2 34.133333-106.666667 42.666667-170.666667 25.6v34.133333c0 8.533333-4.266667 12.8-12.8 17.066667-17.066667 12.8-34.133333 21.333333-51.2 38.4-17.066667 17.066667-12.8 38.4 12.8 51.2 25.6 8.533333 55.466667 12.8 85.333333 8.533333 34.133333-4.266667 68.266667-8.533333 102.4-17.066666-42.666667 21.333333-85.333333 34.133333-132.266666 42.666666-29.866667 4.266667-64 8.533333-93.866667-4.266666-42.666667-12.8-64-46.933333-51.2-89.6 12.8-42.666667 38.4-76.8 64-106.666667 93.866667-102.4 213.333333-153.6 349.866667-166.4 34.133333-4.266667 64 0 93.866666 17.066667 42.666667 21.333333 59.733333 59.733333 38.4 102.4-12.8 29.866667-34.133333 55.466667-51.2 76.8-17.066667 25.6-38.4 46.933333-59.733333 68.266667-29.866667 25.6-64 42.666667-93.866667 64v4.266667l42.666667 8.533333c38.4 8.533333 76.8 12.8 115.2 21.333333 12.8 0 21.333333 8.533333 21.333333 21.333334 0 59.733333-8.533333 115.2-29.866666 170.666666-17.066667 42.666667-42.666667 81.066667-68.266667 115.2 89.6-25.6 179.2-59.733333 264.533334-102.4 17.066667-8.533333 29.866667-25.6 25.6-42.666667-4.266667-25.6-12.8-46.933333-21.333334-68.266666z" fill="#FFFFFF"/></svg></span>
+                        <div class="tl-info">
+                            <h3 class="tl-company">阿里巴巴 · 淘宝事业部</h3>
+                            <p class="tl-role">用户产品运营</p>
+                        </div>
+                    </div>
+                    <ul class="tl-list">
+                        <li>手淘首页摇一摇 — 以极简交互结合算法推荐导流，提升DAU约2%</li>
+                        <li>手淘站外合作 — 支付宝小程序/大促媒介/联盟等渠道合作，日均贡献1W+增量UV</li>
+                    </ul>
+                </div>
+                <div class="tl-item reveal reveal-d2">
+                    <div class="tl-dot"></div>
+                    <p class="tl-date">2017.4 — 2020.10</p>
+                    <div class="tl-header">
+                        <span class="tl-logo didi"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 1024c-283.306667 0-512-228.693333-512-512S228.693333 0 512 0s512 228.693333 512 512-228.693333 512-512 512zM238.933333 331.093333v167.253334c0 37.546667 6.826667 71.68 23.893334 105.813333 20.48 47.786667 58.026667 88.746667 102.4 119.466667 47.786667 30.72 105.813333 47.786667 163.84 47.786666 78.506667 0 160.426667-34.133333 215.04-92.16 47.786667-47.786667 75.093333-112.64 75.093333-177.493333V409.6h-112.64v85.333333c0 37.546667-10.24 75.093333-34.133333 105.813334-30.72 44.373333-85.333333 68.266667-136.533334 71.68-44.373333 0-92.16-13.653333-126.293333-44.373334-37.546667-30.72-58.026667-81.92-61.44-129.706666V423.253333c0-6.826667 6.826667-13.653333 13.653333-13.653333h344.746667V310.613333h-443.733333c-10.24-3.413333-23.893333 6.826667-23.893334 20.48z" fill="#FC9152"/></svg></span>
+                        <div class="tl-info">
+                            <h3 class="tl-company">滴滴出行 · 代驾事业部</h3>
+                            <p class="tl-role">用户产品运营</p>
+                        </div>
+                    </div>
+                    <ul class="tl-list">
+                        <li>经济型代驾品牌孵化 — 城市定价及新用户增长策略，首批7城当月峰值订单破万</li>
+                        <li>C端智能补贴 — 从0-1构建智能补贴机制，ROI提升约10%，获事业部内部奖项</li>
+                        <li>用户生命周期管理 — 搭建用户成长体系，整体留存率提升约5%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label reveal">Expertise</p>
+                <h2 class="section-heading reveal reveal-d1">技能专长</h2>
+                <p class="section-desc reveal reveal-d2">跨领域技能组合，助力产品从0到1的创新与落地。</p>
+            </div>
+            <div class="skills-grid">
+                <div class="sk-group reveal">
+                    <h3 class="sk-group-title">产品设计</h3>
+                    <div class="sk-tags">
+                        <span class="sk-tag expert">Axure</span>
+                        <span class="sk-tag expert">Figma</span>
+                        <span class="sk-tag expert">Sketch</span>
+                        <span class="sk-tag expert">AI辅助设计</span>
+                        <span class="sk-tag advanced">墨刀</span>
+                        <span class="sk-tag advanced">Vibe Coding</span>
+                    </div>
+                </div>
+                <div class="sk-group reveal reveal-d1">
+                    <h3 class="sk-group-title">数据分析</h3>
+                    <div class="sk-tags">
+                        <span class="sk-tag expert">SQL</span>
+                        <span class="sk-tag advanced">Excel</span>
+                        <span class="sk-tag advanced">数据驱动决策</span>
+                        <span class="sk-tag intermediate">R语言</span>
+                    </div>
+                </div>
+                <div class="sk-group reveal reveal-d2">
+                    <h3 class="sk-group-title">语言能力</h3>
+                    <div class="sk-tags">
+                        <span class="sk-tag expert">英语 CET-6 557</span>
+                        <span class="sk-tag advanced">TOEIC 835</span>
+                        <span class="sk-tag advanced">法语 DELF-B2</span>
+                    </div>
+                </div>
+                <div class="sk-group reveal reveal-d3">
+                    <h3 class="sk-group-title">项目管理</h3>
+                    <div class="sk-tags">
+                        <span class="sk-tag expert">PMP认证</span>
+                        <span class="sk-tag expert">系统集成项目管理</span>
+                        <span class="sk-tag advanced">跨团队协作</span>
+                        <span class="sk-tag advanced">敏捷开发</span>
+                    </div>
+                </div>
+                <div class="sk-group reveal reveal-d4">
+                    <h3 class="sk-group-title">办公工具</h3>
+                    <div class="sk-tags">
+                        <span class="sk-tag expert">Office套件</span>
+                        <span class="sk-tag expert">AI办公提效</span>
+                        <span class="sk-tag advanced">X-mind</span>
+                        <span class="sk-tag advanced">Visio</span>
+                    </div>
+                </div>
+                <div class="sk-group reveal reveal-d5">
+                    <h3 class="sk-group-title">AI领域</h3>
+                    <div class="sk-tags">
+                        <span class="sk-tag expert">大模型产品</span>
+                        <span class="sk-tag expert">AI平台设计</span>
+                        <span class="sk-tag advanced">模型训练与推理</span>
+                        <span class="sk-tag advanced">云原生技术</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section" id="education">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label reveal">Education</p>
+                <h2 class="section-heading reveal reveal-d1">教育背景</h2>
+                <p class="section-desc reveal reveal-d2">扎实的学术基础与国际化视野。</p>
+            </div>
+            <div class="edu-list">
+                <div class="edu-item reveal">
+                    <span class="edu-period">2014.09 — 2017.04</span>
+                    <div>
+                        <h3 class="edu-school">北京交通大学</h3>
+                        <p class="edu-meta">通信与信息系统 · 工学硕士（免试）</p>
+                        <p class="edu-note">年级排名2%，国家奖学金、高水平论文奖、三好研究生</p>
+                    </div>
+                </div>
+                <div class="edu-item reveal reveal-d1">
+                    <span class="edu-period">2012.07 — 2014.07</span>
+                    <div>
+                        <h3 class="edu-school">法国马赛中央理工</h3>
+                        <p class="edu-meta">通用工程师 · 硕士（公派留学）</p>
+                        <p class="edu-note">国家留学基金委公派留学资格</p>
+                    </div>
+                </div>
+                <div class="edu-item reveal reveal-d2">
+                    <span class="edu-period">2010.09 — 2012.07</span>
+                    <div>
+                        <h3 class="edu-school">北京交通大学</h3>
+                        <p class="edu-meta">通信工程 · 本科</p>
+                        <p class="edu-note">成绩优异，免试推荐攻读硕士</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section" id="zhixing">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label reveal">Workshop</p>
+                <h2 class="section-heading reveal reveal-d1">知行工坊</h2>
+                <p class="section-desc reveal reveal-d2">理论与实践知行合一，持续洞察行业并输出。</p>
+            </div>
+            <div class="zhixing-grid">
+                <a href="insights.html" class="zhixing-card reveal" style="text-decoration: none; color: inherit;">
+                    <span class="zhixing-accent"></span>
+                    <span class="zhixing-num">01</span>
+                    <h3 class="zhixing-title">行业洞察分析</h3>
+                    <p class="zhixing-desc">每日关注AI、云计算、大模型等前沿科技领域的最新动态，以产品视角形成行业洞察分析。</p>
+                </a>
+                <a href="vibe.html" class="zhixing-card reveal reveal-d1" style="text-decoration: none; color: inherit;">
+                    <span class="zhixing-accent"></span>
+                    <span class="zhixing-num">02</span>
+                    <h3 class="zhixing-title">AI产品应用实践</h3>
+                    <p class="zhixing-desc">探索AI工具在产品设计、开发与优化中的实际应用，记录每一次从概念到落地的实践过程与思考。</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-contact" id="contact">
+        <div class="container">
+            <div class="contact-block reveal">
+                <h2 class="contact-heading">期待与您交流</h2>
+                <p class="contact-sub">探讨产品创新、AI应用与商业机会</p>
+                <a href="mailto:wjrachel20@163.com" class="contact-link">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    wjrachel20@163.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 王瑾 · 产品经理 · 用产品创造价值</p>
+    </footer>
+
+    <script src="scripts/theme.js"></script>
+    <script src="scripts/components.js"></script>
+    <script src="scripts/scroll-reveal.js"></script>
+    <script src="scripts/smooth-scroll.js"></script>
+</body>
+</html>

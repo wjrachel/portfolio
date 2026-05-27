@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新建实践案例 | AI产品应用</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/vibe.css">
+    
+    <!-- Quill.js CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+        }
+
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-family: var(--font-body);
+        }
+
+        .nav-btn-preview {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .nav-btn-preview:hover {
+            background: var(--accent-soft);
+        }
+
+        .nav-btn-publish {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 8px rgba(196, 149, 106, 0.3);
+        }
+
+        .nav-btn-publish:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(196, 149, 106, 0.4);
+        }
+
+        /* 编辑器容器 */
+        .editor-container {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .editor-wrapper {
+            width: 100%;
+        }
+
+        /* 标题输入 */
+        .title-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: var(--text);
+            background: transparent;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .title-input::placeholder {
+            color: var(--text-3);
+        }
+
+        /* Quill 编辑器适配主题 */
+        .ql-container {
+            font-size: 1.05rem;
+            font-family: var(--font-body);
+            color: var(--text);
+            border: none !important;
+        }
+
+        .ql-editor {
+            min-height: 400px;
+            line-height: 1.8;
+            padding: 0 !important;
+        }
+
+        .ql-editor.ql-blank::before {
+            color: var(--text-3);
+            font-style: normal;
+        }
+
+        .ql-toolbar {
+            border: none !important;
+            border-bottom: 1px solid var(--border) !important;
+            padding: 12px 0 !important;
+            margin-bottom: 16px;
+        }
+
+        .ql-toolbar button,
+        .ql-toolbar .ql-picker {
+            color: var(--text-2) !important;
+        }
+
+        .ql-toolbar button:hover,
+        .ql-toolbar button.ql-active {
+            color: var(--accent) !important;
+        }
+
+        .ql-toolbar .ql-stroke {
+            stroke: var(--text-2) !important;
+        }
+
+        .ql-toolbar button:hover .ql-stroke,
+        .ql-toolbar button.ql-active .ql-stroke {
+            stroke: var(--accent) !important;
+        }
+
+        .ql-toolbar .ql-fill {
+            fill: var(--text-2) !important;
+        }
+
+        .ql-toolbar button:hover .ql-fill,
+        .ql-toolbar button.ql-active .ql-fill {
+            fill: var(--accent) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+        <div class="top-nav-left">
+            <a href="vibe.html" class="back-btn">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                返回实践案例
+            </a>
+        </div>
+        <div class="top-nav-right">
+            <button class="nav-btn nav-btn-preview" id="previewBtn">预览</button>
+            <button class="nav-btn nav-btn-publish" id="publishBtn">发布案例</button>
+        </div>
+    </div>
+
+    <!-- 编辑器主体 -->
+    <div class="editor-container">
+        <!-- 第一区块：内容编辑（卡片1） -->
+        <div class="editor-card" style="padding: 24px; margin-bottom: 32px;">
+            
+            <!-- 标题输入 -->
+            <input type="text" class="title-input" id="caseTitle" placeholder="请输入案例标题..." style="margin-bottom: 24px;">
+            
+            <!-- Quill 编辑器 -->
+            <div id="editor"></div>
+        </div>
+
+        <!-- 第二区块：封面图片 + 案例简介（卡片2） -->
+        <div class="editor-card" style="padding: 24px;">
+            <div style="display: flex; gap: 32px; align-items: stretch;">
+                <!-- 封面图片 -->
+                <div style="flex-shrink: 0; width: 200px; display: flex; flex-direction: column;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <label style="font-size: 0.95rem; font-weight: 500; color: var(--text); line-height: 1.5;">封面图片</label>
+                        <span style="font-size: 0.85rem; color: var(--text-3);">1:1比例</span>
+                    </div>
+                    
+                    <!-- 图片区域容器 -->
+                    <div style="position: relative; width: 200px; height: 200px; flex-shrink: 0;">
+                        <!-- 上传区域 -->
+                        <div id="coverUploader" style="
+                            width: 100%;
+                            height: 100%;
+                            border: 2px dashed var(--border);
+                            border-radius: 12px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        ">
+                            <svg viewBox="0 0 24 24" id="coverIcon" style="
+                                width: 40px; 
+                                height: 40px; 
+                                fill: var(--text-3); 
+                                margin-bottom: 8px;
+                            "><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                            <p id="coverText" style="color: var(--text-2); font-size: 0.85rem; text-align: center;">点击上传封面图片</p>
+                            <input type="file" id="coverFile" accept="image/*" style="display: none;">
+                        </div>
+                        
+                        <!-- 图片裁剪预览 -->
+                        <div id="coverPreview" style="display: none; position: absolute; top: 0; left: 0; width: 100%;">
+                            <div style="
+                                width: 200px;
+                                height: 200px;
+                                border-radius: 12px;
+                                overflow: hidden;
+                                background: var(--border);
+                            ">
+                                <img id="coverImage" style="width: 100%; height: 100%; object-fit: cover;" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 裁剪控制和按钮 -->
+                    <div id="cropControls" style="display: none; margin-top: 12px;">
+                        <p style="font-size: 0.85rem; color: var(--text-3); margin-bottom: 8px;">拖动滑块调整裁剪区域：</p>
+                        <input type="range" id="cropSlider" min="0" max="100" value="50" style="width: 200px;" />
+                    </div>
+                    
+                    <div id="coverButtons" style="display: none; flex-direction: row; gap: 10px; margin-top: 12px;">
+                        <button id="removeCover" style="
+                            padding: 6px 12px;
+                            font-size: 0.85rem;
+                            color: var(--text-2);
+                            background: transparent;
+                            border: 1px solid var(--border);
+                            border-radius: 6px;
+                            cursor: pointer;
+                        ">移除封面</button>
+                        <button id="confirmCrop" style="
+                            padding: 6px 12px;
+                            font-size: 0.85rem;
+                            color: white;
+                            background: var(--accent);
+                            border: none;
+                            border-radius: 6px;
+                            cursor: pointer;
+                        ">确认裁剪</button>
+                    </div>
+                </div>
+                
+                <!-- 案例简介 -->
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <label style="font-size: 0.95rem; font-weight: 500; color: var(--text); line-height: 1.5;">案例简介</label>
+                        <span id="excerptCount" style="font-size: 0.85rem; color: var(--text-3);">0/200</span>
+                    </div>
+                    <textarea 
+                        id="caseExcerpt" 
+                        placeholder="请输入案例简介..." 
+                        style="
+                            width: 100%;
+                            height: 200px;
+                            padding: 14px 16px;
+                            font-size: 0.95rem;
+                            font-family: var(--font-body);
+                            color: var(--text);
+                            background: var(--surface);
+                            border: 2px dashed var(--border);
+                            border-radius: 12px;
+                            resize: none;
+                            box-sizing: border-box;
+                            flex-shrink: 0;
+                        "
+                        maxlength="200"
+                    ></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 判断是否是本地开发环境
+        function isLocalEnvironment() {
+            const hostname = window.location.hostname;
+            return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0';
+        }
+        
+        // 如果不是本地环境，显示访问被拒绝
+        if (!isLocalEnvironment()) {
+            document.write(`
+                <!DOCTYPE html>
+                <html lang="zh-CN">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>访问被拒绝</title>
+                    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+                    <style>
+                        body {
+                            font-family: 'DM Sans', system-ui, sans-serif;
+                            background: #f8f6f3;
+                            min-height: 100vh;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .container {
+                            text-align: center;
+                            padding: 48px;
+                            background: white;
+                            border-radius: 16px;
+                            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+                        }
+                        svg {
+                            width: 64px;
+                            height: 64px;
+                            fill: #c4956a;
+                            margin-bottom: 24px;
+                        }
+                        h1 {
+                            font-size: 1.8rem;
+                            color: #1a1714;
+                            margin-bottom: 16px;
+                        }
+                        p {
+                            color: #5c564e;
+                            margin-bottom: 24px;
+                        }
+                        a {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 8px;
+                            padding: 12px 24px;
+                            background: #c4956a;
+                            color: white;
+                            text-decoration: none;
+                            border-radius: 8px;
+                            font-weight: 500;
+                        }
+                        a:hover {
+                            background: #b5855a;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        <h1>访问被拒绝</h1>
+                        <p>此功能仅在本地开发环境可用</p>
+                        <a href="vibe.html">返回案例列表</a>
+                    </div>
+                </body>
+                </html>
+            `);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script src="scripts/theme.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化 Quill 编辑器
+            const quill = new Quill('#editor', {
+                theme: 'snow',
+                placeholder: '在这里编写你的实践案例内容...支持图文混排、代码高亮、文件附件和链接卡片',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'indent': '-1'}, { 'indent': '+1' }],
+                        ['blockquote', 'code-block'],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // 简介输入计数
+            const excerptTextarea = document.getElementById('caseExcerpt');
+            const excerptCount = document.getElementById('excerptCount');
+            
+            excerptTextarea.addEventListener('input', () => {
+                const count = excerptTextarea.value.length;
+                excerptCount.textContent = `${count}/200`;
+                if (count >= 200) {
+                    excerptCount.style.color = 'var(--accent)';
+                } else {
+                    excerptCount.style.color = 'var(--text-3)';
+                }
+            });
+            
+            // 封面图片处理
+            let coverImageData = null;
+            let originalImageData = null;
+            let cropPosition = 50;
+            let isCropped = false;
+            
+            const coverUploader = document.getElementById('coverUploader');
+            const coverFile = document.getElementById('coverFile');
+            const coverPreview = document.getElementById('coverPreview');
+            const coverImage = document.getElementById('coverImage');
+            const removeCover = document.getElementById('removeCover');
+            const cropControls = document.getElementById('cropControls');
+            const cropSlider = document.getElementById('cropSlider');
+            const confirmCrop = document.getElementById('confirmCrop');
+            const coverButtons = document.getElementById('coverButtons');
+            
+            coverUploader.addEventListener('click', () => {
+                coverFile.click();
+            });
+            
+            coverFile.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        originalImageData = event.target.result;
+                        coverImageData = event.target.result;
+                        coverImage.src = event.target.result;
+                        coverPreview.style.display = 'block';
+                        coverUploader.style.display = 'none';
+                        coverButtons.style.display = 'flex';
+                        isCropped = false;
+                        confirmCrop.textContent = '确认剪裁';
+                        
+                        // 创建图片对象检查尺寸
+                        const img = new Image();
+                        img.onload = () => {
+                            // 如果不是正方形，显示裁剪控制
+                            if (Math.abs(img.width - img.height) > 10) {
+                                cropControls.style.display = 'block';
+                                // 根据图片方向设置裁剪方式
+                                if (img.width > img.height) {
+                                    // 横向图片，调整宽度位置
+                                    coverImage.style.objectFit = 'cover';
+                                } else {
+                                    // 纵向图片，调整高度位置
+                                    coverImage.style.objectFit = 'cover';
+                                }
+                            } else {
+                                cropControls.style.display = 'none';
+                            }
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // 裁剪滑块控制
+            cropSlider.addEventListener('input', (e) => {
+                cropPosition = parseInt(e.target.value);
+                // 调整图片位置
+                const img = new Image();
+                img.onload = () => {
+                    if (img.width > img.height) {
+                        // 横向图片，左右移动
+                        const offset = (img.width - img.height) / img.width * 100;
+                        const left = ((cropPosition - 50) / 50) * (offset / 2);
+                        coverImage.style.objectPosition = `${50 + left}% 50%`;
+                    } else {
+                        // 纵向图片，上下移动
+                        const offset = (img.height - img.width) / img.height * 100;
+                        const top = ((cropPosition - 50) / 50) * (offset / 2);
+                        coverImage.style.objectPosition = `50% ${50 + top}%`;
+                    }
+                };
+                img.src = originalImageData;
+            });
+            
+            // 确认剪裁或重新剪裁
+            confirmCrop.addEventListener('click', () => {
+                if (!isCropped) {
+                    // 确认剪裁
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const size = Math.min(img.width, img.height);
+                        canvas.width = size;
+                        canvas.height = size;
+                        
+                        const ctx = canvas.getContext('2d');
+                        let sx, sy;
+                        
+                        if (img.width > img.height) {
+                            sx = (img.width - img.height) * (cropPosition / 100);
+                            sy = 0;
+                        } else {
+                            sx = 0;
+                            sy = (img.height - img.width) * (cropPosition / 100);
+                        }
+                        
+                        ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
+                        coverImageData = canvas.toDataURL('image/jpeg', 0.9);
+                        coverImage.src = coverImageData;
+                        cropControls.style.display = 'none';
+                        isCropped = true;
+                        confirmCrop.textContent = '重新剪裁';
+                        alert('图片剪裁成功！');
+                    };
+                    img.src = originalImageData;
+                } else {
+                    // 重新剪裁
+                    coverImage.src = originalImageData;
+                    isCropped = false;
+                    confirmCrop.textContent = '确认剪裁';
+                    
+                    // 重新显示剪裁控件
+                    const img = new Image();
+                    img.onload = () => {
+                        if (Math.abs(img.width - img.height) > 10) {
+                            cropControls.style.display = 'block';
+                            cropPosition = 50;
+                            cropSlider.value = 50;
+                            coverImage.style.objectFit = 'cover';
+                            coverImage.style.objectPosition = '50% 50%';
+                        }
+                    };
+                    img.src = originalImageData;
+                }
+            });
+            
+            removeCover.addEventListener('click', () => {
+                coverImageData = null;
+                originalImageData = null;
+                coverPreview.style.display = 'none';
+                coverUploader.style.display = 'flex';
+                coverButtons.style.display = 'none';
+                coverFile.value = '';
+                cropControls.style.display = 'none';
+                isCropped = false;
+                confirmCrop.textContent = '确认剪裁';
+            });
+
+            // 保存内容
+            function saveContent() {
+                try {
+                    const title = document.getElementById('caseTitle').value;
+                    const excerpt = document.getElementById('caseExcerpt').value;
+                    const content = quill.root.innerHTML;
+                    
+                    if (!title.trim()) {
+                        alert('请输入案例标题');
+                        return;
+                    }
+                    
+                    if (!content.trim()) {
+                        alert('请输入案例内容');
+                        return;
+                    }
+                    
+                    // 获取URL参数中的案例ID（用于编辑模式）
+                    const params = new URLSearchParams(window.location.search);
+                    const caseId = params.get('id');
+                    
+                    const caseData = {
+                        title,
+                        excerpt,
+                        content,
+                        coverImage: coverImageData,
+                        updatedAt: new Date().toLocaleString('zh-CN')
+                    };
+                    
+                    const existingCases = JSON.parse(localStorage.getItem('vibeCases') || '[]');
+                    
+                    if (caseId) {
+                        // 编辑模式：更新现有案例
+                        const index = existingCases.findIndex(c => c.id === caseId);
+                        if (index !== -1) {
+                            existingCases[index] = { ...existingCases[index], ...caseData };
+                        }
+                    } else {
+                        // 新建模式：创建新案例
+                        const newCase = {
+                            id: Date.now().toString(),
+                            ...caseData,
+                            createdAt: new Date().toLocaleString('zh-CN')
+                        };
+                        existingCases.unshift(newCase);
+                    }
+                    
+                    localStorage.setItem('vibeCases', JSON.stringify(existingCases));
+                    
+                    // 显示成功提示
+                    const successDiv = document.createElement('div');
+                    successDiv.style.cssText = `
+                        position: fixed;
+                        top: 80px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: var(--accent);
+                        color: white;
+                        padding: 14px 24px;
+                        border-radius: 10px;
+                        z-index: 1001;
+                        box-shadow: 0 4px 20px rgba(196, 149, 106, 0.4);
+                        animation: slideDown 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        font-family: var(--font-body);
+                        font-size: 0.95rem;
+                        font-weight: 500;
+                    `;
+                    successDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: white;">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                        ${caseId ? '案例更新成功！' : '案例发布成功！'}
+                    `;
+                    document.body.appendChild(successDiv);
+                    
+                    setTimeout(() => {
+                        successDiv.style.animation = 'slideUp 0.3s ease';
+                        setTimeout(() => {
+                            document.body.removeChild(successDiv);
+                            window.location.href = 'vibe.html';
+                        }, 300);
+                    }, 2000);
+                    
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes slideDown {
+                            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+                        }
+                        @keyframes slideUp {
+                            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+                            to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                } catch (error) {
+                    console.error('保存失败:', error);
+                    alert('保存失败，请重试');
+                }
+            }
+
+            // 编辑模式：加载现有案例
+            function loadCaseForEdit() {
+                const params = new URLSearchParams(window.location.search);
+                const caseId = params.get('id');
+                
+                if (caseId) {
+                    const cases = JSON.parse(localStorage.getItem('vibeCases') || '[]');
+                    const caseItem = cases.find(c => c.id === caseId);
+                    
+                    if (caseItem) {
+                        document.getElementById('caseTitle').value = caseItem.title;
+                        document.getElementById('caseExcerpt').value = caseItem.excerpt || '';
+                        quill.root.innerHTML = caseItem.content;
+                        
+                        // 更新简介计数
+                        const count = (caseItem.excerpt || '').length;
+                        excerptCount.textContent = `${count}/200`;
+                        
+                        if (caseItem.coverImage) {
+                            coverImageData = caseItem.coverImage;
+                            originalImageData = caseItem.coverImage;
+                            coverImage.src = caseItem.coverImage;
+                            coverPreview.style.display = 'block';
+                            coverUploader.style.display = 'none';
+                            coverButtons.style.display = 'flex';
+                            isCropped = true;
+                            confirmCrop.textContent = '重新剪裁';
+                        }
+                        
+                        // 更新按钮文字
+                        document.getElementById('publishBtn').textContent = '更新案例';
+                    }
+                }
+            }
+            
+            // 页面加载时检查是否为编辑模式
+            loadCaseForEdit();
+
+            // 预览内容
+            function previewContent() {
+                const title = document.getElementById('caseTitle').value;
+                const content = quill.root.innerHTML;
+                
+                // 创建预览模态框
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.5);
+                    z-index: 1000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                `;
+                
+                const previewBox = document.createElement('div');
+                previewBox.style.cssText = `
+                    position: relative;
+                    background: white;
+                    border-radius: 12px;
+                    width: 100%;
+                    max-width: 800px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    padding: 48px 32px 32px;
+                `;
+                
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '<svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: #666;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+                closeBtn.style.cssText = `
+                    position: absolute;
+                    top: 12px;
+                    right: 12px;
+                    width: 36px;
+                    height: 36px;
+                    padding: 0;
+                    background: #f5f5f5;
+                    border: none;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.2s;
+                `;
+                closeBtn.onmouseenter = () => {
+                    closeBtn.style.background = '#e0e0e0';
+                };
+                closeBtn.onmouseleave = () => {
+                    closeBtn.style.background = '#f5f5f5';
+                };
+                closeBtn.onclick = () => {
+                    document.body.removeChild(modal);
+                };
+                
+                const previewContentDiv = document.createElement('div');
+                previewContentDiv.innerHTML = `
+                    <style>
+                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+                        h1 { margin-bottom: 30px; color: #1a1a1a; }
+                        h2 { margin: 24px 0 12px; color: #2a2a2a; }
+                        h3 { margin: 20px 0 10px; color: #3a3a3a; }
+                        p { margin: 12px 0; line-height: 1.8; color: #4a4a4a; }
+                        ul, ol { margin: 12px 0; padding-left: 24px; }
+                        li { margin: 6px 0; }
+                        blockquote { 
+                            border-left: 4px solid #c4956a; 
+                            padding-left: 16px; 
+                            margin: 16px 0; 
+                            color: #6a6a6a;
+                            font-style: italic;
+                        }
+                        pre { 
+                            background: #f5f5f5; 
+                            padding: 16px; 
+                            border-radius: 8px; 
+                            overflow-x: auto;
+                            font-family: 'Monaco', 'Menlo', monospace;
+                            font-size: 0.9rem;
+                            white-space: pre-wrap;
+                            word-break: break-all;
+                        }
+                        code { 
+                            background: #f0f0f0; 
+                            padding: 2px 6px; 
+                            border-radius: 4px;
+                            font-family: 'Monaco', 'Menlo', monospace;
+                        }
+                        img { max-width: 100%; border-radius: 8px; }
+                        a { color: #c4956a; text-decoration: none; }
+                        a:hover { text-decoration: underline; }
+                    </style>
+                    <h1>${title || '无标题'}</h1>
+                    ${content || '<p style="color:#999;">暂无内容</p>'}
+                `;
+                
+                previewBox.appendChild(closeBtn);
+                previewBox.appendChild(previewContentDiv);
+                modal.appendChild(previewBox);
+                document.body.appendChild(modal);
+                
+                // 点击背景也关闭
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                });
+            }
+
+            // 绑定按钮事件
+            document.getElementById('previewBtn').addEventListener('click', previewContent);
+            document.getElementById('publishBtn').addEventListener('click', saveContent);
+        });
+    </script>
+</body>
+</html>

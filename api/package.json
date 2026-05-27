@@ -1,0 +1,13 @@
+{
+  "name": "vibe-coding-api",
+  "version": "1.0.0",
+  "description": "API for Vibe Coding practice cases",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
