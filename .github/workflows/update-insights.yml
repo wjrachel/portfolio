@@ -1,0 +1,46 @@
+name: Update Insights Articles
+
+on:
+  schedule:
+    - cron: '0 6 * * 5'
+  workflow_dispatch:
+
+jobs:
+  update-insights:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        ref: gh-pages
+        fetch-depth: 0
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Run update script
+      run: |
+        python scripts/update-insights.py
+    
+    - name: Check for changes
+      id: check-changes
+      run: |
+        git add .
+        if git diff --cached --quiet; then
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+          git status
+        fi
+    
+    - name: Commit and push changes
+      if: steps.check-changes.outputs.has_changes == 'true'
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        git add insights.html
+        git commit -m "自动更新行业洞察分析页面"
+        git push origin gh-pages
