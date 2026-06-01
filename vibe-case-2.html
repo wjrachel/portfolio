@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用扣子Agent为工作提效 | AI产品应用实践</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        
+        .detail-header {
+            margin-bottom: 32px;
+        }
+        
+        .detail-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .detail-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-3);
+            font-size: 0.9rem;
+        }
+        
+        .detail-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+        
+        .detail-content h1,
+        .detail-content h2,
+        .detail-content h3,
+        .detail-content h4 {
+            font-family: var(--font-display);
+            margin: 24px 0 12px;
+            color: var(--text);
+        }
+        
+        .detail-content h1 { font-size: 1.8rem; }
+        .detail-content h2 { font-size: 1.5rem; }
+        .detail-content h3 { font-size: 1.3rem; }
+        .detail-content h4 { font-size: 1.15rem; }
+        
+        .detail-content p {
+            margin: 12px 0;
+        }
+        
+        .detail-content ul,
+        .detail-content ol {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+        
+        .detail-content li {
+            margin: 6px 0;
+        }
+        
+        .detail-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            margin: 16px 0;
+            color: var(--text-2);
+            font-style: italic;
+            font-size: 1rem;
+        }
+        
+        .detail-content pre {
+            background: var(--surface);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid var(--border);
+        }
+        
+        .detail-content code {
+            background: var(--accent-soft);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .detail-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 16px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
+        }
+        
+        .detail-content img.loading {
+            background: var(--border);
+            min-height: 200px;
+        }
+        
+        .detail-content img.failed {
+            display: none;
+        }
+        
+        .image-fallback {
+            background: var(--accent-soft);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        
+        .image-fallback svg {
+            width: 48px;
+            height: 48px;
+            fill: var(--text-3);
+            margin-bottom: 12px;
+        }
+        
+        .image-fallback p {
+            color: var(--text-3);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .detail-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .detail-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+        
+        .back-btn:hover {
+            color: var(--accent);
+        }
+        
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <a href="vibe.html" class="back-btn">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            返回案例列表
+        </a>
+        
+        <article>
+            <header class="detail-header">
+                <h1 class="detail-title">使用扣子Agent为工作提效</h1>
+                <div class="detail-meta">
+                    <span>发布于 2026-06-01</span>
+                </div>
+            </header>
+            <div class="detail-content">
+                <h1 id="概述">概述</h1>
+                <blockquote>26.06.01 coze更新3.0版本了：多人多Agent协作-支持创建项目，邀请多人多 Agent 组队接力干活；专业项目开发：轻松搞定复杂的编程开发与一站式视频创作，融入主对话入口； 跨端无缝协同-全新桌面端上线，支持手机与电脑无缝联动 --本文档完成时还未来得及体验新版本😂</blockquote>
+
+                <p>在OpenClaw火出圈以后，从最开始大家热火朝天地本地部署养虾，到现在各个厂商都出了自己智能体产品，可以说是遍地开花了，对用户来说使用智能体也越来越便捷和丝滑。升级后的扣子就是可以开箱即用的智能体产品，使用它我们可以毫不费力地养自己的龙虾🦞（智能体），并且封装了日程、文件、邮箱、设备这些能力，让其真正地成为得力小助手，随时随地帮我们干活！</p>
+
+                <ul>
+                    <li><strong>日程</strong>：定时任务管理，通过对话沟通可以将任务制定为日程，像钉钉日程一样，定时触发反馈结果 <span style="color:#8A8F8D;">--目前频繁使用</span></li>
+                    <li><strong>文件</strong>：管理我们上传的或者智能体帮我们生成的一些文件，并可以引用文件至对话进行一些增删改查的操作，还可以下载到本地，非常方便 <span style="color:#8A8F8D;">--目前频繁使用</span></li>
+                    <li><strong>邮箱</strong>：智能体有自己的邮箱【你的智能体名@coze.email】，可以与其他邮箱进行邮件往来 <span style="color:#8A8F8D;">--与个人邮箱测试通信成功，但目前没有太多应用场景</span></li>
+                    <li><strong>设备</strong>：可以添加云手机或者云电脑等专属设备，7*24小时在线 <span style="color:#8A8F8D;">--这个目前没有深入体验过</span></li>
+                </ul>
+
+                <p><img src="cases/case2/case2-img01.png" alt="Coze对话界面"></p>
+
+                <p>此外，扣子也提供了丰富的技能，可通过技能市场安装使用（部分技能收费需要购买，当然对技能开发者来说就可以赚钱了💰~）：</p>
+
+                <p><img src="cases/case2/case2-img02.png" alt="技能商店"></p>
+
+                <p>还有个有趣的点是扣子创建了一个<strong>Agent World</strong>，是agent生活学习和互相交流的地方，可以送你的龙虾去逛逛，还可以围观它逛做一个赛博观察员🔎，还挺有意思的：</p>
+
+                <p><img src="cases/case2/case2-img03.png" alt="Agent World"></p>
+
+                <p><img src="cases/case2/case2-img04.png" alt="Agent World酒馆"></p>
+
+                <p><img src="cases/case2/case2-img05.png" alt="Agent World留言墙"></p>
+
+                <p>扣子编程我也简单体验了下，但个人感觉比不上其他coding类的产品，交付质量一般，且崩溃频率有点高==（可能最近升级后的3.0新版本有所提升，待体验～</p>
+
+                <h2 id="具体实践">具体实践</h2>
+                <p>下面介绍下目前我使用我的扣子智能体--麻辣小扣🦞目前在做的几个事情：</p>
+
+                <h3 id="1、每日ai行业洞察分析">1、每日AI行业洞察分析</h3>
+                <p>起初我只是跟麻辣小扣闲聊，关于我想了解下最近的一些AI科技和金融方面的信息，后续我又谈到自己的职业焦虑担心跟不上AI发展的速度等等，通过我们多次的交流，它主动提出可以帮我做这样一个AI行业洞察的事情，我觉得还不错，就让它去帮我定制了这样一个流程，没想到就一直run下去了~具体的流程如下：</p>
+
+                <ul>
+                    <li><strong>制定日程</strong>：通过我们的对话交流，麻辣小扣为我制定了每日科技金融早报的推送日程</li>
+                </ul>
+
+                <p><img src="cases/case2/case2-img06.png" alt="日程设置"></p>
+
+                <ul>
+                    <li><strong>推送日报：</strong>每天早9：30它会自动触发日程，以日报形式推送科技金融领域的最新消息，并从中选取值得深挖的一条按照预设的框架形成分析提示</li>
+                </ul>
+
+                <p><img src="cases/case2/case2-img07.png" alt="科技金融早报"></p>
+
+                <p><img src="cases/case2/case2-img08.png" alt="每日分析提示"></p>
+
+                <ul>
+                    <li><strong>分析讨论&amp;形成文档</strong>：随后，我会据此撰写我对此条新闻的分析和见解，并与麻辣小扣交流，它会再次为我补充，并将我的分析按照约定的格式形成每日的<strong>AI行业观察文档.MD</strong>，保存到对应的文件夹中</li>
+                </ul>
+
+                <p><img src="cases/case2/case2-img09.png" alt="分析讨论"></p>
+
+                <p><img src="cases/case2/case2-img10.png" alt="文件管理"></p>
+
+                <ul>
+                    <li><strong>推送至github仓库，作为个人主页素材</strong>：通过给麻辣小扣提供github仓库地址和token（会保存至SECRET.md），它帮我制定了每周五的定时推送任务，将每周新增的几篇行业观察文档自动推送至我的github仓库指定位置，这样我的Coding Agent就可以自动从github上拉取最新文章并添加到我的个人主页上，形成闭环。<span style="color:#8A8F8D;">--没有使用扣子的coding制作个人主页，体验不太好，所以通过github来作为第三方中转了，新版本编程能力还未来得及体验😂</span></li>
+                </ul>
+
+                <p><img src="cases/case2/case2-img11.png" alt="GitHub推送日程"></p>
+
+                <p>经过一段时间这个流程的运行，我对AI领域的科技和金融信息有了很多了解，并在分析的过程中不断梳理和输出自己对于AI领域的思考，感觉认知提升非常多。通过对话、信息搜集、日程、文件这些智能体能力的组合，让行业信息洞察这件小事成为了日常习惯，也真正地<strong>通过AI技术赋能和提升了自己</strong>。</p>
+
+                <p>当然偶尔也会遇到一些小问题，比如：有时日程会忘记推送或者推送失败、有时发送的日报和分析框架会变、有时文件保存格式会突然乱掉，这些需要通过对话来对智能体进行反复纠正~但总的来说体验还是不错的~！</p>
+
+                <h3 id="2、日常办公提效">2、日常办公提效</h3>
+                <p>日常办公中有很多调研、整理文件、编辑文档等相关需求，都可以借助扣子智能体对话和文件交互的能力来帮我们提效，比如我目前实践过的这几个案例：</p>
+
+                <h4 id="调研报告生成">调研报告生成</h4>
+                <p>Claude Opus4.8发布了，领导发来文档让我了解下其在算子自动化生成方面的能力：</p>
+
+                <p><img src="cases/case2/case2-img12.png" alt="任务要求"></p>
+
+                <p>于是，我让麻辣小扣基于这个文档进行扩展调研，很快就帮我整理好了一份详尽的调研报告，再经过我们之间的几轮沟通，删减部分内容，调整整体结构，一份正式的调研报告就形成了，整个过程也就花了<strong>1个小时不到</strong>，还可以在我做其他工作时并行处理，如果纯人工起码要做1-2天，提效真是杠杠的！</p>
+
+                <p><img src="cases/case2/case2-img13.png" alt="调研报告"></p>
+
+                <p>当然，因为要给领导看，还是要注重内容的正确性，于是我将这个调研报告下载下来（这要得益于扣子智能体文件的管理能力，可以方便的下载、分享、复制内容），丢给deepseek check了一遍，结果显示内容正确性也是非常高的，这下可以放心交差啦！</p>
+
+                <p><img src="cases/case2/case2-img14.png" alt="下载文档"></p>
+
+                <p><img src="cases/case2/case2-img15.png" alt="DeepSeek验证"></p>
+
+                <h4 id="最新论文跟踪">最新论文跟踪</h4>
+                <p>因为工作关系，需要定期追踪集合通信、算子、编译等底层软件栈相关领域的最新论文，靠自己去arxiv网站上去搜索整理效率很低，于是我使用扣子帮我搜索了近一个月上述领域的最新论文并按照要求整理成文档：</p>
+
+                <p><img src="cases/case2/case2-img16.png" alt="论文搜索"></p>
+
+                <p>同时，制定了论文月度追踪的日程，每个月15号定时搜索整理新增论文，并按照确定好的格式整理成文档发送给我，大大提高了我的工作效率：</p>
+
+                <p><img src="cases/case2/case2-img17.png" alt="论文追踪日程"></p>
+
+                <p><img src="cases/case2/case2-img18.png" alt="日程设置详情"></p>
+
+                <h2 id="总结">总结</h2>
+                <p>通过近一个月的使用，个人感觉扣子智能体对于我的办公提效是比较显著的，尤其在信息搜集、产品调研、文档整理编辑等方面给出了比较好的交付结果，目前已付费升级为个人进阶版用户（虽然不太想付费上班啦==），期待在后续的使用中发现扣子更多的用法和惊喜体验！🎉</p>
+
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <p>© 2025 王瑾 · 知行工坊 · AI产品应用实践</p>
+    </footer>
+
+    <script src="scripts/theme.js"></script>
+    <script>
+        // 图片加载失败处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.detail-content img');
+            
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    // 创建fallback元素
+                    const fallback = document.createElement('div');
+                    fallback.className = 'image-fallback';
+                    fallback.innerHTML = `
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <p>图片加载失败</p>
+                    `;
+                    
+                    // 替换图片元素
+                    img.parentNode.replaceChild(fallback, img);
+                });
+                
+                // 添加加载中样式
+                img.classList.add('loading');
+                
+                img.addEventListener('load', function() {
+                    img.classList.remove('loading');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
