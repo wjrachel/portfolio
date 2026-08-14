@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# 构建产物备份（不入库）
+*.backup
+
+# 本地工具 / 技能库（不属于网站内容）
+.agents/
+
+# Node
+node_modules/
