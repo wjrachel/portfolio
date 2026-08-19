@@ -16,9 +16,9 @@ function updateThemeIcons(theme) {
 }
 
 function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcons(savedTheme);
+    // <head> 内联脚本已在首帧前设置 data-theme，这里只同步图标状态
+    const t = document.documentElement.getAttribute('data-theme') || 'light';
+    updateThemeIcons(t);
 }
 
 // 页面加载时初始化主题

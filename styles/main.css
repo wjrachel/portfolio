@@ -48,6 +48,15 @@ body {
 .container { max-width: 1080px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 64px); }
 
 /* ══════════════════════════════════════
+   Focus — 键盘可达（仅在键盘导航时显示焦点环，鼠标点击不干扰）
+   ══════════════════════════════════════ */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ══════════════════════════════════════
    Theme Toggle
    ══════════════════════════════════════ */
 .theme-btn {
