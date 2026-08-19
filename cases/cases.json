@@ -1,0 +1,18 @@
+[
+  {
+    "id": "case-1",
+    "title": "咖啡塔罗H5应用",
+    "excerpt": "咖啡塔罗H5小应用，使用阿里秒悟Vibe Coding制作，通过抽取塔罗牌查看今日运势和推荐咖啡品类。",
+    "coverImage": "cases/case1/img05.webp",
+    "detailUrl": "vibe-case-1.html",
+    "createdAt": "2026-05-27"
+  },
+  {
+    "id": "case-2",
+    "title": "使用扣子Agent为工作提效",
+    "excerpt": "使用Coze扣子AI智能体（麻辣小扣🦞）进行日常办公提效实践，包括每日AI行业洞察分析、调研报告生成、最新论文追踪等，真正通过AI技术赋能和提升自己！",
+    "coverImage": "cases/case2/case2-cover.webp",
+    "detailUrl": "vibe-case-2.html",
+    "createdAt": "2026-06-01"
+  }
+]
