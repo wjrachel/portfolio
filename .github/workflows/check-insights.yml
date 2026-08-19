@@ -1,0 +1,23 @@
+# 校验：push 到 gh-pages 后，确认已提交的 insights.html 与 AI行业观察/ 下的 .md 源一致
+# 说明：gh-pages 是直出分支，此检查无法阻止部署（push 即上线），但会在 CI 里醒目地标出
+#       「文章新增但未重新生成 / 解析告警」，提示你尽快补跑 `npm run build:insights` 并提交。
+name: Check insights artifact
+
+on:
+  push:
+    branches: [ gh-pages ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Verify insights.html matches sources
+        run: npm run check:insights

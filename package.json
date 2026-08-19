@@ -1,0 +1,11 @@
+{
+  "name": "wj-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "王瑾个人作品集（gh-pages 直出部署）",
+  "scripts": {
+    "build:insights": "node scripts/build-insights.js",
+    "check:insights": "node scripts/build-insights.js --check",
+    "preview:insights": "node scripts/build-insights.js --dry"
+  }
+}
